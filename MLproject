@@ -1,0 +1,42 @@
+name: thesis
+
+conda_env: conda.yml
+
+# docker_env:
+#   image: mlflow-docker-example-environment
+#   volumes: ["/local/path:/container/mount/path"]
+#   environment: [["NEW_ENV_VAR", "new_var_value"], "VAR_TO_COPY_FROM_HOST_ENVIRONMENT"]
+    
+entry_points:
+
+  gridsearch:
+    parameters:
+      task: {type: string, default: 'asset.variety'}
+      metric: {type: string, default: 'f1'}
+      averaging: {type: string, default: 'macro'}
+      imputer: {type: string, default: 'dropnan'}
+      random_state: {type: int, default: 0}
+      merge: {type: str, default: 'yes'}
+      pca: {type: int, default: 0}
+      n_jobs_cv: {type: int, default: 1}
+      n_folds: {type: int, default: 5}
+    command: |
+      python3 hyperparameter_tuning/gridsearch.py --pca {pca} --merge {merge} --task {task} --imputer {imputer} --n-folds {n_folds} --n-jobs-cv {n_jobs_cv} --metric {metric} --averaging {averaging} --random-state {random_state}  
+
+  train:
+    parameters:
+      task: {type: string, default: 'asset.variety'}
+      target: {type: string, default: 'Server'}
+      algo: {type: string, default: 'LGBM'}
+      hyperparams: {type: string, default: '{}'}
+      imputer: {type: string, default: 'dropnan'}
+      train_size: {type: float, default: 0.8}
+      split_random_state: {type: int, default: 0}
+      n_folds: {type: int, default: 5}
+      merge: {type: str, default: "yes"}
+      pca: {type: int, default: 0}
+      explain: {type: str, default: "no"}
+      shap_data_percentage: {type: float, default: 0.1}
+      shap_test_over_train_percentage: {type: float, default: 0.3}
+    command: |
+      python3 train.py --pca {pca} --merge {merge} --explain {explain} --task {task} --target {target} --algo {algo} --hyperparams {hyperparams} --imputer {imputer} --train-size {train_size} --split-random-state {split_random_state} --n-folds {n_folds} --shap-data-percentage {shap_data_percentage} --shap-test-over-train-percentage {shap_test_over_train_percentage}
