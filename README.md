@@ -9,3 +9,5 @@ See [here](https://medium.com/swlh/how-to-whitelist-ip-addresses-to-access-desir
 
 Alternatively check file at root: How_to_Whitelist_IP_Addresses_to_Access_Desired_Docker_Containers.pdf
 
+Follow the procedure and only allow VPN IPs to the specific port you need to reach.
+
