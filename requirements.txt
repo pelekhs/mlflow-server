@@ -1,8 +1,0 @@
-flask==2.0.1
-mlflow==1.18.0 
-click==7.1.2
-python-dotenv==0.17.0
-boto3==1.17.58
-connexion==2.7.0
-
-
